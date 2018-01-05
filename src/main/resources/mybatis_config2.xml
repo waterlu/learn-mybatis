@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties" />
+    <settings>
+        <!-- 自动做驼峰转换，理论上如果严格遵循标准可以省略ResultMapping -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <!-- 定义别名，在.xml中可以直接引用别名 -->
+        <!-- string, integer, long, map 等类型已经预置，可以直接使用 -->
+        <typeAlias type="cn.lu.learn.entity.User" alias="User" />
+    </typeAliases>
+    <environments default="development">
+        <!-- 每个 environment是一个数据源，可以配置多个数据源 -->
+        <environment id="development">
+            <!-- 数据库事务：通常选择JDBC，采用JDBC方式管理事务 -->
+            <transactionManager type="JDBC" />
+            <dataSource type="cn.lu.learn.demo3.MyDataSourceFactory">
+                <property name="driver" value="${driver}" />
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mybatis/user2.xml" />
+    </mappers>
+</configuration>
