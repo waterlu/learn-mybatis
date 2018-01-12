@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
 
 /**
+ * JDBC访问数据库
+ *
  * @author lutiehua
  * @date 2018/1/5
  */
@@ -29,7 +31,7 @@ public class JdbcController {
         return getUser(userUuid);
     }
 
-    private User getUser(String userUuid) {
+    public User getUser(String userUuid) {
         Connection connection = getConnection();
         if (null == connection) {
             return null;

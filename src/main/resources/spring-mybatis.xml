@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+	">
+
+    <!-- 载入常用的配置 -->
+    <context:property-placeholder location="classpath:db.properties,classpath:druid.properties"/>
+
+    <!-- 注解扫描所有包 -->
+    <context:component-scan base-package="cn.lu.learn.*"/>
+
+    <context:annotation-config/>
+
+    <!-- 扫描事务注解 -->
+    <tx:annotation-driven/>
+
+    <!-- 扫描缓存注解 -->
+    <cache:annotation-driven/>
+
+    <!-- 数据源 -->
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">-->
+        <!--&lt;!&ndash; 数据库连接 &ndash;&gt;-->
+        <!--<property name="driverClassName" value="${driver}"/>-->
+        <!--<property name="url" value="${url}"/>-->
+        <!--<property name="username" value="${username}"/>-->
+        <!--<property name="password" value="${password}"/>-->
+
+        <!--&lt;!&ndash; Druid连接池 &ndash;&gt;-->
+        <!--<property name="initialSize" value="${druid.initialSize}"/>-->
+        <!--<property name="minIdle" value="${druid.minIdle}"/>-->
+        <!--<property name="maxActive" value="${druid.maxActive}"/>-->
+        <!--<property name="maxWait" value="${druid.maxWait}"/>-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>-->
+        <!--<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>-->
+        <!--<property name="validationQuery" value="${druid.validationQuery}"/>-->
+        <!--<property name="testWhileIdle" value="${druid.testWhileIdle}"/>-->
+        <!--<property name="testOnBorrow" value="${druid.testOnBorrow}"/>-->
+        <!--<property name="testOnReturn" value="${druid.testOnReturn}"/>-->
+        <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="filters" value="${druid.filters}"/>&ndash;&gt;-->
+
+    <!--</bean>-->
+
+    <!-- 取代mybatis_config -->
+    <!-- protected SqlSessionFactory buildSqlSessionFactory() throws IOException {} -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+
+        <!-- 使用xml配置，自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:mybatis/user.xml"></property>
+
+        <property name="typeAliasesPackage" value="cn.lu.learn.entity"/>
+
+    </bean>
+
+    <!-- 使用mapper注解方式 自动扫描接口注解 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.lu.learn.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!-- 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+</beans>

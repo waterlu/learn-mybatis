@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * 只用Mybatis，不用Spring
+ * org.mybatis:mybatis:3.4.0
+ *
  * @author lutiehua
  * @date 2018/1/5
  */

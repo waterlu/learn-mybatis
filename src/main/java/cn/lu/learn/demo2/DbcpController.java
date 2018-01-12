@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
 
 /**
+ * 数据库连接池
+ *
  * @author lutiehua
  * @date 2018/1/5
  */
@@ -23,6 +25,10 @@ public class DbcpController {
 
     private DruidDataSource dataSource;
 
+    /**
+     * DBCP->C3P0->Druid
+     *
+     */
     public DbcpController() {
         dataSource = new DruidDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
