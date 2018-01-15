@@ -14,7 +14,7 @@ import javax.sql.DataSource;
  * @author lutiehua
  * @date 2018/1/12
  */
-@Configuration
+//@Configuration
 @ImportResource(locations={"classpath:spring-mybatis.xml"})
 public class WebConfig {
 

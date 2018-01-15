@@ -3,6 +3,7 @@
 <mapper namespace="cn.lu.learn.mapper.UserMapper">
     <select id="queryByUuid" parameterType="java.lang.String" resultType="cn.lu.learn.entity.User">
         select user_uuid as userUuid, user_mobile as userMobile, user_type as userType, user_pay_password as userPayPassword,
-                user_status, user_trade_status, delete_flag, create_time, update_time from `user` where user_uuid = #{userUuid}
+                user_status as userStatus, user_trade_status as userTradeStatus, delete_flag as deleteFlag, create_time, update_time
+                from `user` where user_uuid = #{userUuid}
     </select>
 </mapper>

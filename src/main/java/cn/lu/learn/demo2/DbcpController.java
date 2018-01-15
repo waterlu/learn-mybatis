@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
 
 /**
- * 数据库连接池
+ * 数据库连接池（DBCP->C3P0->Druid）
  *
  * @author lutiehua
  * @date 2018/1/5
@@ -60,6 +60,8 @@ public class DbcpController {
                 "delete_flag, create_time, update_time from `user` where user_uuid = ?";
         try {
             ps = connection.prepareStatement(sql);
+            // 设置手工控制事务
+//            connection.setAutoCommit(false);
             ps.setString(1, userUuid);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -75,6 +77,10 @@ public class DbcpController {
                 user.setUpdateTime(rs.getDate("update_time"));
                 return user;
             }
+            // 提交或回滚事务
+//            connection.commit();
+//            connection.rollback();
+
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error(e.getMessage());

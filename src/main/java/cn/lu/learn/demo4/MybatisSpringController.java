@@ -6,6 +6,8 @@ import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +25,18 @@ public class MybatisSpringController {
 
     private final Logger logger = LoggerFactory.getLogger(MybatisSpringController.class);
 
+    // 方法一：spring-mybatis.xml中定义了id为userMapper的bean，这里直接引用
+    // userMapper指定了Mapper类和sqlSessionFactory
+//    @Autowired
+//    @Qualifier(value = "userMapper")
+//    private UserMapper userMapper;
+
+    // 方法二：spring-mybatis.xml中不用定义每个Mapper的Bean，指定目录扫描注解
     @Autowired
     private UserMapper userMapper;
 
     @RequestMapping("/query")
+//    @Transactional
     public User query(@RequestParam String userUuid) {
         if (Strings.isNullOrEmpty(userUuid)) {
             return null;

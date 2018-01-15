@@ -47,7 +47,6 @@ public class MybatisController {
             // sqlSession中配置了数据库链接，同时也配置了mapper的XML文件
             // 每个XML文件中，mapper的namespace就是它的key，通常这个key指向Mapper接口
             // 这样getMapper()相当于根据Mapper的类名获取XML文件的内容，就得到了需要执行的SQL语句
-            // 这里没有使用动态代理类，直接获取，更容易理解
             UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
             User user = userMapper.queryByUuid(userUuid);
             return user;

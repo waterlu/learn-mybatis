@@ -25,8 +25,8 @@
 
     <context:annotation-config/>
 
-    <!-- 扫描事务注解 -->
-    <tx:annotation-driven/>
+    <!-- 使用声明式事务，扫描事务注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- 扫描缓存注解 -->
     <cache:annotation-driven/>
@@ -57,6 +57,7 @@
 
     <!-- 取代mybatis_config -->
     <!-- protected SqlSessionFactory buildSqlSessionFactory() throws IOException {} -->
+    <!-- 创建SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
 
@@ -64,13 +65,23 @@
         <property name="mapperLocations" value="classpath:mybatis/user.xml"></property>
 
         <property name="typeAliasesPackage" value="cn.lu.learn.entity"/>
-
     </bean>
 
-    <!-- 使用mapper注解方式 自动扫描接口注解 -->
+    <!-- 方法一：非注解使用方式，需要自己手工定义每一个Mapper -->
+    <!-- UserMapper userMapper = sqlSession.getMapper(UserMapper.class); -->
+    <!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" >-->
+        <!--<property name="mapperInterface" value="cn.lu.learn.mapper.UserMapper" />-->
+        <!--<property name="sqlSessionFactory" ref="sqlSessionFactory" />-->
+    <!--</bean>-->
+
+    <!-- 方法二：自动扫描，取代手工配置 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 自动扫描的位置 -->
         <property name="basePackage" value="cn.lu.learn.mapper"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <!-- 自动扫描的注解 -->
+        <property name="annotationClass" value="org.springframework.stereotype.Repository" />
+        <!-- sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 
     <!-- 事务配置 -->

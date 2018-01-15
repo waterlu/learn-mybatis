@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lu.learn.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="User">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="user_uuid" jdbcType="CHAR" property="userUuid" />
+        <result column="user_mobile" jdbcType="VARCHAR" property="userMobile" />
+        <result column="user_type" jdbcType="TINYINT" property="userType" />
+        <result column="user_pay_password" jdbcType="CHAR" property="userPayPassword" />
+        <result column="user_status" jdbcType="SMALLINT" property="userStatus" />
+        <result column="user_trade_status" jdbcType="SMALLINT" property="userTradeStatus" />
+        <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <!-- string=java.lang.String -->
+    <select id="queryByUuid" parameterType="string" resultMap="BaseResultMap">
+        select user_uuid, user_mobile, user_type, user_pay_password,
+        user_status, user_trade_status, delete_flag, create_time, update_time from `user` where user_uuid = #{userUuid}
+    </select>
+</mapper>
