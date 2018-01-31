@@ -30,14 +30,7 @@ public class DbcpController {
      *
      */
     public DbcpController() {
-        dataSource = new DruidDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUsername("zj_admin");
-        dataSource.setPassword("123456");
-        dataSource.setUrl("jdbc:mysql://10.10.10.174:3306/luth?useUnicode=true&characterEncoding=utf8&useSSL=false");
-        dataSource.setInitialSize(5);
-        dataSource.setMinIdle(1);
-        dataSource.setMaxActive(10);
+
     }
 
     @RequestMapping("/query")
@@ -108,6 +101,16 @@ public class DbcpController {
 
     private Connection getConnection() {
         try {
+            if (null == dataSource) {
+                dataSource = new DruidDataSource();
+                dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+                dataSource.setUsername("zj_admin");
+                dataSource.setPassword("123456");
+                dataSource.setUrl("jdbc:mysql://10.10.10.174:3306/luth?useUnicode=true&characterEncoding=utf8&useSSL=false");
+                dataSource.setInitialSize(5);
+                dataSource.setMinIdle(1);
+                dataSource.setMaxActive(10);
+            }
             return dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,8 @@
 package cn.lu.learn.demo4;
 
+import cn.lu.learn.entity.Account;
 import cn.lu.learn.entity.User;
+import cn.lu.learn.mapper.AccountMapper;
 import cn.lu.learn.mapper.UserMapper;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -8,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * MyBatis + Spring
@@ -35,6 +35,9 @@ public class MybatisSpringController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private AccountMapper accountMapper;
+
     @RequestMapping("/query")
 //    @Transactional
     public User query(@RequestParam String userUuid) {
@@ -43,6 +46,13 @@ public class MybatisSpringController {
         }
 
         return userMapper.queryByUuid(userUuid);
+    }
+
+    @GetMapping("/account/{accountUuid}")
+    public Account getAccount(@PathVariable String accountUuid) {
+//        return accountMapper.selectByPrimaryKey(accountUuid);
+//        return accountMapper.selectById(accountUuid);
+        return null;
     }
 
 }

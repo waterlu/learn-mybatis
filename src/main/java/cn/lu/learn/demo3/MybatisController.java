@@ -47,8 +47,18 @@ public class MybatisController {
             // sqlSession中配置了数据库链接，同时也配置了mapper的XML文件
             // 每个XML文件中，mapper的namespace就是它的key，通常这个key指向Mapper接口
             // 这样getMapper()相当于根据Mapper的类名获取XML文件的内容，就得到了需要执行的SQL语句
+            User user = null;
+
+            // 第一种方法，SqlSession的Configuration中，Map的Key有全称和简称两种，"queryByUuid"和"cn.lu.learn.mapper.UserMapper.queryByUuid"都缓存了
+            user = sqlSession.selectOne("queryByUuid", userUuid);
+
+            // 第二种方法，MappedStatement ms = this.configuration.getMappedStatement(statement);
+            user = sqlSession.selectOne("cn.lu.learn.mapper.UserMapper.queryByUuid", userUuid);
+
+            // 常用方法
             UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            User user = userMapper.queryByUuid(userUuid);
+            user = userMapper.queryByUuid(userUuid);
+
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,12 +73,11 @@ public class MybatisController {
     }
 
     private SqlSessionFactory getSqlSessionFactory() {
-        if (null != sqlSessionFactory) {
-            return sqlSessionFactory;
-        }
-
         InputStream inputStream = null;
         try {
+            if (null != sqlSessionFactory) {
+                return sqlSessionFactory;
+            }
             inputStream = Resources.getResourceAsStream("mybatis_config.xml");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         } catch (IOException e) {

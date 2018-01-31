@@ -17,9 +17,9 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     </resultMap>
 
-    <!-- string=java.lang.String -->
-    <select id="queryByUuid" parameterType="string" resultMap="BaseResultMap">
-        select user_uuid, user_mobile, user_type, user_pay_password,
-        user_status, user_trade_status, delete_flag, create_time, update_time from `user` where user_uuid = #{userUuid}
-    </select>
+    <!--&lt;!&ndash; string=java.lang.String &ndash;&gt;-->
+    <!--<select id="queryByUuid" parameterType="string" resultMap="BaseResultMap">-->
+        <!--select user_uuid, user_mobile, user_type, user_pay_password,-->
+        <!--user_status, user_trade_status, delete_flag, create_time, update_time from `user` where user_uuid = #{userUuid}-->
+    <!--</select>-->
 </mapper>

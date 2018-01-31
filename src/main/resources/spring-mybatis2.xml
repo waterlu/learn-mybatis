@@ -62,9 +62,15 @@
         <property name="dataSource" ref="dataSource"/>
 
         <!-- 使用xml配置，自动扫描mapping.xml文件 -->
-        <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath:mybatis/user.xml"></property>
 
         <property name="typeAliasesPackage" value="cn.lu.learn.entity"/>
+
+        <property name="plugins">
+            <bean class="cn.lu.learn.demo6.SecurityInterceptor">
+
+            </bean>
+        </property>
     </bean>
 
     <!-- 方法一：非注解使用方式，需要自己手工定义每一个Mapper -->

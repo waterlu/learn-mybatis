@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lu.learn.mapper.AccountTransactionMapper">
+  <resultMap id="BaseResultMap" type="cn.lu.learn.entity.AccountTransaction">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="account_transaction_id" jdbcType="BIGINT" property="accountTransactionId" />
+    <result column="transaction_bill_code" jdbcType="VARCHAR" property="transactionBillCode" />
+    <result column="user_uuid" jdbcType="CHAR" property="userUuid" />
+    <result column="account_uuid" jdbcType="CHAR" property="accountUuid" />
+    <result column="oppo_user_uuid" jdbcType="CHAR" property="oppoUserUuid" />
+    <result column="oppo_account_uuid" jdbcType="CHAR" property="oppoAccountUuid" />
+    <result column="transaction_time" jdbcType="TIMESTAMP" property="transactionTime" />
+    <result column="transaction_amount" jdbcType="DECIMAL" property="transactionAmount" />
+    <result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+    <result column="order_bill_code" jdbcType="VARCHAR" property="orderBillCode" />
+    <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_uuid" jdbcType="VARCHAR" property="updateUuid" />
+  </resultMap>
+
+  <update id="restore" parameterType="cn.lu.learn.entity.AccountTransaction">
+    UPDATE account_transaction
+    SET delete_flag = 1, update_uuid = #{updateUuid}
+    WHERE order_bill_code = #{orderBillCode} AND user_uuid = #{userUuid} AND account_uuid = #{accountUuid} AND delete_flag = 0;
+  </update>
+
+</mapper>

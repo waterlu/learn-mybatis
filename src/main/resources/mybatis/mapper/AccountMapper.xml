@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lu.learn.mapper.AccountMapper">
+  <resultMap id="BaseResultMap" type="cn.lu.learn.entity.Account">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="account_uuid" jdbcType="CHAR" property="accountUuid" />
+    <result column="user_uuid" jdbcType="CHAR" property="userUuid" />
+    <result column="account_type" jdbcType="CHAR" property="accountType" />
+    <result column="account_status" jdbcType="TINYINT" property="accountStatus" />
+    <result column="account_amount" jdbcType="DECIMAL" property="accountAmount" />
+    <result column="account_cash_amount" jdbcType="DECIMAL" property="accountCashAmount" />
+    <result column="account_freeze_amount" jdbcType="DECIMAL" property="accountFreezeAmount" />
+    <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <update id="payOrder" parameterType="cn.lu.learn.entity.Account">
+    UPDATE account
+    SET account_amount = account_amount - #{accountAmount}, account_cash_amount = account_cash_amount - #{accountCashAmount}
+    WHERE account_uuid = #{accountUuid} AND account_amount &gt;= #{accountAmount} AND account_cash_amount &gt;= #{accountCashAmount}
+    AND account_status = 1 AND delete_flag = 0;
+  </update>
+
+  <update id="restore" parameterType="cn.lu.learn.entity.Account">
+    UPDATE account
+    SET account_amount = account_amount + #{accountAmount}, account_cash_amount = account_cash_amount + #{accountCashAmount}
+    WHERE account_uuid = #{accountUuid} AND account_status = 1 AND delete_flag = 0;
+  </update>
+
+</mapper>
